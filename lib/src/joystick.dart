@@ -39,6 +39,12 @@ class Joystick extends StatefulWidget {
   /// Decides if the stick's initial movement animation should be included. By default [true].
   final bool includeInitialAnimation;
 
+  /// Have the joystick keeps its position when released
+  final bool disableRecenterOnDragEnd;
+
+  /// Set the initial joystick position
+  final Offset? initialOffset;
+  
   const Joystick({
     super.key,
     required this.listener,
@@ -51,6 +57,8 @@ class Joystick extends StatefulWidget {
     this.onStickDragStart,
     this.onStickDragEnd,
     this.includeInitialAnimation = true,
+    this.disableRecenterOnDragEnd = false,
+    this.initialOffset,
   });
 
   @override
@@ -73,6 +81,7 @@ class _JoystickState extends State<Joystick> {
     widget.controller?.onStickDragUpdate =
         (globalPosition) => _stickDragUpdate(globalPosition);
     widget.controller?.onStickDragEnd = () => _stickDragEnd();
+    _stickOffset = widget.initialOffset ?? _stickOffset;
     if (widget.includeInitialAnimation) {
       Future.delayed(
         const Duration(milliseconds: 300),
@@ -174,9 +183,11 @@ class _JoystickState extends State<Joystick> {
   }
 
   void _stickDragEnd() {
-    setState(() {
-      _stickOffset = Offset.zero;
-    });
+    if (!widget.disableRecenterOnDragEnd){
+      setState(() {
+        _stickOffset = Offset.zero;
+      });
+    }
 
     _callbackTimer?.cancel();
     //send zero offset when the stick is released
