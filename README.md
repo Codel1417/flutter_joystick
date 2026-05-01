@@ -10,10 +10,12 @@
 [![Buy Me A Coffee](https://img.shields.io/badge/Donate-Buy%20me%20a%20coffee-FFDD00?logo=buymeacoffee)](https://www.buymeacoffee.com/rebeloid)
 [![PayPal](https://img.shields.io/badge/Donate-PayPal-066BB7?logo=paypal)](https://paypal.me/pavelzaichyk)
 
+📢 Follow for updates: [t.me/pavelzaichyk_dev](https://t.me/pavelzaichyk_dev)
+
 Flutter Joystick is a virtual joystick package for Flutter applications that provides interactive
 joystick components for user interface design.
 
-[See Examples](https://joystick.rebeloid.com)
+[See Examples](https://joystick.pavelzaichyk.com)
 [Google Play](https://play.google.com/store/apps/details?id=com.rebeloid.flutter_joystick_example)
 
 ## Table of Contents
