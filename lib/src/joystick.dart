@@ -77,9 +77,9 @@ class _JoystickState extends State<Joystick> {
   void initState() {
     super.initState();
     widget.controller?.onStickDragStart =
-        (localPosition) => _stickDragStart(localPosition);
+        (globalPosition) => _stickDragStart(globalPosition);
     widget.controller?.onStickDragUpdate =
-        (localPosition) => _stickDragUpdate(localPosition);
+        (globalPosition) => _stickDragUpdate(globalPosition);
     widget.controller?.onStickDragEnd = () => _stickDragEnd();
     _stickOffset = widget.initialOffset ?? _stickOffset;
     if (widget.includeInitialAnimation) {
@@ -100,8 +100,8 @@ class _JoystickState extends State<Joystick> {
           child: widget.base ?? JoystickBase(mode: widget.mode),
         ),
         GestureDetector(
-          onPanStart: (details) => _stickDragStart(details.localPosition),
-          onPanUpdate: (details) => _stickDragUpdate(details.localPosition),
+          onPanStart: (details) => _stickDragStart(details.globalPosition),
+          onPanUpdate: (details) => _stickDragUpdate(details.globalPosition),
           onPanEnd: (details) => _stickDragEnd(),
           child: widget.stick,
         ),
@@ -160,20 +160,20 @@ class _JoystickState extends State<Joystick> {
     );
   }
 
-  void _stickDragStart(Offset localPosition) {
+  void _stickDragStart(Offset globalPosition) {
     _runCallback();
-    _startDragStickPosition = localPosition;
+    _startDragStickPosition = globalPosition;
     widget.onStickDragStart?.call();
   }
 
-  void _stickDragUpdate(Offset localPosition) {
+  void _stickDragUpdate(Offset globalPosition) {
     final baseRenderBox =
         _baseKey.currentContext!.findRenderObject()! as RenderBox;
 
     final stickOffset = widget.stickOffsetCalculator.calculate(
       mode: widget.mode,
       startDragStickPosition: _startDragStickPosition,
-      currentDragStickPosition: localPosition,
+      currentDragStickPosition: globalPosition,
       baseSize: baseRenderBox.size,
     );
 
